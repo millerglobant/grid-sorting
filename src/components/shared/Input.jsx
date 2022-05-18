@@ -3,7 +3,8 @@ import React from 'react'
 const Input = ({
   id,
   placeholder = 'Type here...',
-  value = 'default value!'
+  value = 'default value!',
+  onchange
 }) => {
   return (
     <>
@@ -29,6 +30,7 @@ const Input = ({
         id={id}
         placeholder={placeholder}
         value={value}
+        onChange={onchange}
       />
     </>
   )

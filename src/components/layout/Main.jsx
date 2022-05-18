@@ -6,7 +6,18 @@ import Header from "../shared/Header"
 import Input from "../shared/Input"
 
 const Main = () => {
-  const {size, objects} = useContext(AppContext)
+  const {size, objects, setObjects} = useContext(AppContext)
+
+  const updateValue = (newValue, key, objId) =>{
+    const newObjects = [...objects]
+    const index = newObjects.findIndex(object =>{
+      return object.id == objId
+    })
+    if(index !== -1){
+      newObjects[index][key] = newValue
+    }
+    setObjects([...newObjects]);
+  }
 
 
   return (
@@ -24,7 +35,16 @@ const Main = () => {
             <Row columns={size} key={`row${i}`}>
               {
                 Object.keys(object).map((key, i)=>{
-                  return <Input value={object[key]} key={`input${i}`}/>
+                  let objId = object.id
+                  if(key!=='id'){
+                    return (
+                      <Input 
+                        value={object[key]} 
+                        key={`input${i}`}
+                        onchange={(e)=>{updateValue(e.target.value, key, objId)}}
+                      />
+                    )
+                  }
                 })
               }
             </Row>
