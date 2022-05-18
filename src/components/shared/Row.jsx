@@ -7,7 +7,7 @@ const Row = ({
   const gridStyle = { gridTemplateColumns : `repeat(${columns}, minmax(0, 1fr))`}
 
   return (
-    <div  className={`grid gap-2`} style={gridStyle}>
+    <div  className={`mt-2 mb-2 grid gap-2`} style={gridStyle}>
       {children}
     </div>
   )
