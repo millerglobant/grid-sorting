@@ -8,6 +8,7 @@ export const AppProvider = ({children}) =>{
   const [size, setSize] = useState(2)
   const [objects, setObjects] = useState([])
 
+  //Create an array of objects
   const createObjectArr = ()=>{
     let newArr = []
     for (let i=0; i<size; i++){
@@ -19,19 +20,31 @@ export const AppProvider = ({children}) =>{
       }
       newArr.push(newObj);
     }
-    console.log(newArr);
     setObjects(newArr);
   }
 
   useEffect(()=>{
     createObjectArr()
   },[size])
+
+  // Update a value of each input field
+  const updateValue = (newValue, key, objId) =>{
+    const newObjects = [...objects]
+    const index = newObjects.findIndex(object =>{
+      return object.id == objId
+    })
+    if(index !== -1){
+      newObjects[index][key] = newValue
+    }
+    setObjects([...newObjects]);
+  }
   
   return <AppContext.Provider value={{
     size,
     setSize,
     objects,
-    setObjects
+    setObjects,
+    updateValue
   }}>
     {children}
   </AppContext.Provider>

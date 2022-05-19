@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import AppContext from "../../context/AppContext"
 
 import Row from "../shared/Row"
@@ -6,26 +6,24 @@ import Header from "../shared/Header"
 import Input from "../shared/Input"
 
 const Main = () => {
-  const {size, objects, setObjects} = useContext(AppContext)
+  const {size, objects, setObjects, updateValue} = useContext(AppContext)
+  const [sortBy, setSortBy] = useState('')
 
-  const updateValue = (newValue, key, objId) =>{
-    const newObjects = [...objects]
-    const index = newObjects.findIndex(object =>{
-      return object.id == objId
-    })
-    if(index !== -1){
-      newObjects[index][key] = newValue
-    }
-    setObjects([...newObjects]);
+  const handleSort = (colName)=>{
+    const newArray = [...objects].sort((a,b) => (a[colName] > b[colName]) ? 1 : ((b[colName] > a[colName]) ? -1 : 0))
+    setObjects(newArray)
   }
-
 
   return (
     <div className="flex-1 p-10 ">
       <Row columns={size}>
        {
         Array.apply(null, { length: size }).map((e, i) => (
-          <Header number={i+1} key={`header${i}`}/>
+          <Header 
+            number={i+1} 
+            key={`header${i}`}
+            onclick={()=>handleSort(`header${i+1}`)}
+          />
         ))
        }
       </Row>
